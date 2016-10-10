@@ -30,9 +30,9 @@ public class Util
 //				System.out.print(geneArray.get(i).getGenes()[j]);
 //			}
 //			System.out.println("\n");
-			fitness(geneArray.get(i));
 		}
 		
+		geneArray = fitness(geneArray);
 		roulette(geneArray);
 		
 		return geneArray;
@@ -59,18 +59,23 @@ public class Util
 		genes.setGenes(here);
 	}
 	
-	public void fitness(Citizen genes)
+	public ArrayList<Citizen> fitness(ArrayList<Citizen> genes)
 	{
-		byte[] here = genes.getGenes();
-		int fitness = 0;
-		for(int i = 0; i < here.length; i++)
-		{
-			if(here[i] == 1)
-			{
-				fitness++;
-			}
-		}
-		genes.setFitness(fitness);
+	    for(int i = 0; i < genes.size(); i++)
+	    {
+    		byte[] here = genes.get( i ).getGenes();
+    		int fitness = 0;
+    		for(int j = 0; j < here.length; j++)
+    		{
+    			if(here[j] == 1)
+    			{
+    				fitness++;
+    			}
+    		}
+    		genes.get(i).setFitness(fitness);
+	    }
+	    
+	    return genes;
 	}
 	
 	public void roulette(ArrayList<Citizen> geneArray)
@@ -92,10 +97,11 @@ public class Util
 	public int totalFitness(ArrayList<Citizen> geneArray)
 	{
 		int totalFitness = 0;
+		Citizen here = geneArray.get(0);
 		for(int i = 0; i < geneArray.size(); i++)
 		{
-			totalFitness += geneArray.get(i).getFitness();
-			System.out.println(geneArray.size() + "This");
+			totalFitness += here.getFitness();
+			here = geneArray.get( i );
 		}
 		
 
